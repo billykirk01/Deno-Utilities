@@ -23,38 +23,34 @@ export function removeFile(fileName: string) {
     }
 }
 
-export function writeToFile(filename: string, content: string, options: Deno.WriteFileOptions): void {
+export function writeFileStringSync(filename: string, content: string, options: Deno.WriteFileOptions) {
     const filePath = resolve(filename)
     const encoder = new TextEncoder();
     Deno.writeFileSync(filePath, encoder.encode(content), options);
 }
 
-export function appendToFile(filename: string, content: string) {
-    writeToFile(filename, content, { append: true });
+export function appendLineToFile(filename: string, content: string) {
+    writeFileStringSync(filename, content + "\n", { append: true })
 }
 
-export function appendLineToFile(filename: string, content: string): void {
-    appendToFile(filename, content + "\n")
+export function readJSONSync<T>(fileName: string): T {
+    return readJsonSync(resolve(fileName)) as T
 }
 
-export function readJSON(fileName: string): unknown {
-    return readJsonSync(resolve(fileName))
-}
-
-export function writeJSON(fileName: string, json: any): unknown {
+export function writeJSONSync(fileName: string, json: any){
     return writeJsonSync(resolve(fileName), json)
 }
 
 export function transformJSONArray<T>(inputFileName: string, outputFileName: string, transformFn?: (obj: T) => any) {
     const inputFile = resolve(inputFileName)
     const outputFile = resolve(outputFileName)
-    const inputJSON = readJSON(inputFile) as T[]
+    const inputJSON = readJSONSync(inputFile) as T[]
     if (transformFn) {
         const outputJSON = inputJSON.map(transformFn)
-        writeJSON(outputFile, outputJSON)
+        writeJSONSync(outputFile, outputJSON)
         return
     }
-    writeJSON(outputFile, inputJSON)
+    writeJSONSync(outputFile, inputJSON)
 }
 
 export * from "https://deno.land/std/fs/mod.ts"

@@ -45,10 +45,10 @@ export function writeJSON(fileName: string, json: any): unknown {
     return writeJsonSync(resolve(fileName), json)
 }
 
-export function transformJSONArray(inputFileName: string, outputFileName: string, transformFn?: () => any) {
+export function transformJSONArray<T>(inputFileName: string, outputFileName: string, transformFn?: (obj: T) => any) {
     const inputFile = resolve(inputFileName)
     const outputFile = resolve(outputFileName)
-    const inputJSON = readJSON(inputFile) as any[]
+    const inputJSON = readJSON(inputFile) as T[]
     if (transformFn) {
         const outputJSON = inputJSON.map(transformFn)
         writeJSON(outputFile, outputJSON)

@@ -23,7 +23,11 @@ export function removeFile(fileName: string) {
     }
 }
 
-export function writeFileStringSync(filename: string, content: string, options: Deno.WriteFileOptions) {
+export function writeFileStringSync(
+    filename: string,
+    content: string,
+    options: Deno.WriteFileOptions
+) {
     const filePath = resolve(filename)
     const encoder = new TextEncoder();
     Deno.writeFileSync(filePath, encoder.encode(content), options);
@@ -37,11 +41,15 @@ export function readJSONSync<T>(fileName: string): T {
     return readJsonSync(resolve(fileName)) as T
 }
 
-export function writeJSONSync(fileName: string, json: any){
+export function writeJSONSync(fileName: string, json: any) {
     return writeJsonSync(resolve(fileName), json)
 }
 
-export function transformJSONArray<T>(inputFileName: string, outputFileName: string, transformFn?: (obj: T) => any) {
+export function transformJSONArray<T>(
+    inputFileName: string,
+    outputFileName: string,
+    transformFn?: (obj: T) => any
+) {
     const inputFile = resolve(inputFileName)
     const outputFile = resolve(outputFileName)
     const inputJSON = readJSONSync(inputFile) as T[]

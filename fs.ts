@@ -23,20 +23,20 @@ export function removeFile(fileName: string) {
     }
 }
 
-export function writeToFileSync(filename: string, content: string, options: Deno.WriteFileOptions): void {
+export function writeToFile(filename: string, content: string, options: Deno.WriteFileOptions): void {
     const filePath = resolve(filename)
     const encoder = new TextEncoder();
     Deno.writeFileSync(filePath, encoder.encode(content), options);
 }
 
-export function appendToFileSync(filename: string, content: string) {
-    writeToFileSync(filename, content, { append: true });
+export function appendToFile(filename: string, content: string) {
+    writeToFile(filename, content, { append: true });
 }
 
-export function appendLineToFileSync(filename: string, content: string): void {
-    appendToFileSync(filename, content + "\n")
+export function appendLineToFile(filename: string, content: string): void {
+    appendToFile(filename, content + "\n")
 }
 
-export function readJsonSync(fileName: string): unknown {
+export function readJson(fileName: string): unknown {
     return _readJsonSync(resolve(fileName))
 }

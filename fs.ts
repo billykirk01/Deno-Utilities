@@ -1,7 +1,7 @@
 import { readJsonSync as _readJsonSync } from "https://deno.land/std/fs/mod.ts";
 import { resolve } from "https://deno.land/std/fs/path/mod.ts";
 
-export function exists(filename: string): boolean {
+export function fileExists(filename: string): boolean {
     try {
         Deno.statSync(resolve(filename));
         // successful, file or directory must exist

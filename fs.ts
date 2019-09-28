@@ -18,7 +18,7 @@ export function fileExists(filename: string): boolean {
 }
 
 export function removeFile(fileName: string) {
-    if (exists(fileName)) {
+    if (fileExists(fileName)) {
         Deno.removeSync(resolve(fileName))
     }
 }

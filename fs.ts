@@ -1,4 +1,4 @@
-import { readJsonSync } from "https://deno.land/std/fs/mod.ts";
+import { readJsonSync, writeJsonSync } from "https://deno.land/std/fs/mod.ts";
 import { resolve } from "https://deno.land/std/fs/path/mod.ts";
 
 export function fileExists(filename: string): boolean {
@@ -37,8 +37,24 @@ export function appendLineToFile(filename: string, content: string): void {
     appendToFile(filename, content + "\n")
 }
 
-export function readJson(fileName: string): unknown {
+export function readJSON(fileName: string): unknown {
     return readJsonSync(resolve(fileName))
+}
+
+export function writeJSON(fileName: string, json: any): unknown {
+    return writeJsonSync(resolve(fileName), json)
+}
+
+export function transformJSONArray(inputFileName: string, outputFileName: string, transformFn?: () => any) {
+    const inputFile = resolve(inputFileName)
+    const outputFile = resolve(outputFileName)
+    const inputJSON = readJSON(inputFile) as any[]
+    if (transformFn) {
+        const outputJSON = inputJSON.map(transformFn)
+        writeJSON(outputFile, outputJSON)
+        return
+    }
+    writeJSON(outputFile, inputJSON)
 }
 
 export * from "https://deno.land/std/fs/mod.ts"

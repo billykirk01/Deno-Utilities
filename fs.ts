@@ -40,3 +40,5 @@ export function appendLineToFile(filename: string, content: string): void {
 export function readJson(fileName: string): unknown {
     return readJsonSync(resolve(fileName))
 }
+
+export * from "https://deno.land/std/fs/mod.ts"

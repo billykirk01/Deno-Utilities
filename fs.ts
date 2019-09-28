@@ -58,3 +58,4 @@ export function transformJSONArray<T>(inputFileName: string, outputFileName: str
 }
 
 export * from "https://deno.land/std/fs/mod.ts"
+export { resolve } from "https://deno.land/std/fs/path/mod.ts";

@@ -1,16 +1,6 @@
 import { readJsonSync as _readJsonSync } from "https://deno.land/std/fs/mod.ts";
 import { resolve } from "https://deno.land/std/fs/path/mod.ts";
 
-export function readJsonSync(fileName: string): unknown {
-    return _readJsonSync(resolve(fileName))
-}
-
-export function removeFile(fileName: string) {
-    if (exists(fileName)) {
-        Deno.removeSync(resolve(fileName))
-    }
-}
-
 export function exists(filename: string): boolean {
     try {
         Deno.statSync(resolve(filename));
@@ -25,10 +15,20 @@ export function exists(filename: string): boolean {
             throw error;
         }
     }
-};
+}
+
+export function removeFile(fileName: string) {
+    if (exists(fileName)) {
+        Deno.removeSync(resolve(fileName))
+    }
+}
 
 export function writeFileStrSync(filename: string, content: string, options: Deno.WriteFileOptions): void {
     const filePath = resolve(filename)
     const encoder = new TextEncoder();
     Deno.writeFileSync(filePath, encoder.encode(content), options);
+}
+
+export function readJsonSync(fileName: string): unknown {
+    return _readJsonSync(resolve(fileName))
 }

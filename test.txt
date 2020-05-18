@@ -1,1 +1,2 @@
-Hello world!
+Hello world from line 1!
+Hello world from line 2!

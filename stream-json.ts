@@ -14,9 +14,9 @@ class JSONStream extends EventEmitter {
     async stream() {
         console.time("Run Time");
         let file = await Deno.open(this.filepath);
-        const iter = Deno.iter(file);
-        for await (const chunk of iter) {
-            chunk.forEach((uint8) => {
+        //creates async iterator from reader, default buffer size is 32kb
+        for await (const buffer of Deno.iter(file)) {
+            buffer.forEach((uint8) => {
                 //open brace
                 if (uint8 === 123) {
                     if (this.openBraceCount === 0) this.tempByteArray = [];

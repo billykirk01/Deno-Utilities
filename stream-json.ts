@@ -20,6 +20,7 @@ export class JSONStream extends EventEmitter {
             for (let i = 0, len = buffer.length; i < len; i++) {
                 const uint8 = buffer[ i ];
 
+                //remove whitespace
                 if (uint8 === 10 || uint8 === 13 || uint8 === 32) continue;
 
                 //open brace

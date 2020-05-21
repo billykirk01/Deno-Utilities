@@ -16,7 +16,12 @@ export class JSONStream extends EventEmitter {
         let file = await Deno.open(this.filepath);
         //creates iterator from reader, default buffer size is 32kb
         for await (const buffer of Deno.iter(file)) {
-            buffer.forEach((uint8) => {
+
+            for (let i = 0, len = buffer.length; i < len; i++) {
+                const uint8 = buffer[ i ];
+
+                if (uint8 === 10 || uint8 === 13 || uint8 === 32) continue;
+
                 //open brace
                 if (uint8 === 123) {
                     if (this.openBraceCount === 0) this.tempUint8Array = [];
@@ -35,21 +40,15 @@ export class JSONStream extends EventEmitter {
                         this.emit('object', object);
                     }
                 };
-            });
+            };
         }
         file.close();
         console.timeEnd("Run Time");
     }
 }
 
-/*
-Example usage
-
 const stream = new JSONStream('test.json');
 
 stream.on('object', (object: any) => {
     // do something with object
 });
-
-*/
-

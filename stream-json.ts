@@ -1,6 +1,6 @@
 import { EventEmitter } from "https://deno.land/std/node/events.ts";
 
-class JSONStream extends EventEmitter {
+export class JSONStream extends EventEmitter {
 
     private openBraceCount = 0;
     private tempUint8Array: number[] = [];
@@ -42,9 +42,14 @@ class JSONStream extends EventEmitter {
     }
 }
 
+/*
+Example usage
+
 const stream = new JSONStream('test.json');
 
 stream.on('object', (object: any) => {
     // do something with object
 });
+
+*/
 

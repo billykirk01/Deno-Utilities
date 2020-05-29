@@ -48,8 +48,8 @@ export class JSONStream extends EventEmitter {
     }
 }
 
-const stream = new JSONStream('test.json');
+// const stream = new JSONStream('test.json');
 
-stream.on('object', (object: any) => {
-    // do something with object
-});
+// stream.on('object', (object: any) => {
+//      do something with object
+// });

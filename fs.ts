@@ -73,4 +73,30 @@ export async function writeJson(
   });
 }
 
+type Replacer = (key: string, value: any) => any;
+
+export interface WriteJsonOptions extends Deno.WriteFileOptions {
+  replacer?: Array<number | string> | Replacer;
+  spaces?: number | string;
+}
+
+function serialize(
+  filePath: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  object: any,
+  options: WriteJsonOptions,
+): string {
+  try {
+    const jsonString = JSON.stringify(
+      object,
+      options.replacer as string[],
+      options.spaces,
+    );
+    return `${jsonString}\n`;
+  } catch (err) {
+    err.message = `${filePath}: ${err.message}`;
+    throw err;
+  }
+}
+
 export * from "https://deno.land/std/fs/mod.ts";

@@ -1,18 +1,22 @@
 import { BufReader, readLines } from "https://deno.land/std@0.77.0/io/mod.ts";
 
 /**
- * Write the string to file.
+ * Writes a line to file.
  *
  * @param filename File to write
- * @param content The content write to file
+ * @param content The content to write to file
  * @returns Promise<void>
  */
-export async function appendFileStr(
+export async function writeLineToFile(
   filename: string,
   content: string,
 ): Promise<void> {
   const encoder = new TextEncoder();
-  await Deno.writeFile(filename, encoder.encode(content), { append: true });
+  await Deno.writeFile(
+    filename,
+    encoder.encode(content + "\n"),
+    { append: true },
+  );
 }
 
 export async function transformJSONArray(
@@ -33,7 +37,9 @@ export async function transformJSONArray(
  * @param filename File to read
  */
 
-export async function* readLine(filename: string): AsyncGenerator<string> {
+export async function* readLinesFromFile(
+  filename: string,
+): AsyncGenerator<string> {
   const r: Deno.File = await Deno.open(filename);
   const reader = new BufReader(r);
 
@@ -98,5 +104,3 @@ function serialize(
     throw err;
   }
 }
-
-export * from "https://deno.land/std@0.77.0/fs/mod.ts";

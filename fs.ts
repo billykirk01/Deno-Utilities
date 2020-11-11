@@ -33,7 +33,7 @@ export async function transformJSONArray(
  * @param filename File to read
  */
 
-export async function* readline(filename: string): AsyncGenerator<string> {
+export async function* readLine(filename: string): AsyncGenerator<string> {
   const r: Deno.File = await Deno.open(filename);
   const reader = new BufReader(r);
 

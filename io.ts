@@ -6,12 +6,13 @@ import { BufReader, readLines } from "https://deno.land/std/io/mod.ts";
 
 export async function* readLinesFromFile(
   filename: string,
-): AsyncGenerator<string> {
+): AsyncGenerator<[string, number]> {
   const r: Deno.File = await Deno.open(filename);
   const reader = new BufReader(r);
-
+  let index = 0;
   for await (const line of readLines(reader)) {
-    yield line;
+    index++;
+    yield [line, index];
   }
 
   r.close();

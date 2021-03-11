@@ -1,10 +1,26 @@
 import { BufReader, readLines } from "https://deno.land/std/io/mod.ts";
 
-/** Iterates through a file line by line.
+/** Iterates through a file line by line yielding the line on each iteration.
  * @param filename File to read
  */
 
 export async function* readLinesFromFile(
+  filename: string,
+): AsyncGenerator<string> {
+  const r: Deno.File = await Deno.open(filename);
+  const reader = new BufReader(r);
+  for await (const line of readLines(reader)) {
+    yield line;
+  }
+
+  r.close();
+}
+
+/** Iterates through a file line by line yeilding a tuple of the line and line number on each iteration.
+ * @param filename File to read
+ */
+
+export async function* readLinesFromFileWithCount(
   filename: string,
 ): AsyncGenerator<[string, number]> {
   const r: Deno.File = await Deno.open(filename);

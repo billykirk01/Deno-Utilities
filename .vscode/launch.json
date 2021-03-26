@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Deno",
-            "type": "node",
+            "type": "pwa-node",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "runtimeExecutable": "deno",
@@ -11,9 +11,9 @@
                 "run",
                 "--inspect-brk",
                 "-A",
-                "parser.ts"
+                "${file}"
             ],
-            "port": 9229
+            "attachSimplePort": 9229
         }
     ]
 }
